@@ -1,0 +1,49 @@
+{%extends 'layout.html'%}
+
+{%block article%}
+
+{%for article in articles%}
+<div class="listBox">
+    <h1>{{article.title}}</h1>
+    <p class="colDefault">
+        作者：<span class="colInfo">{{article.user.username}}</span> -
+        时间：<span class="colInfo">{{article.addTime|date('Y年m月d日 H:i:s', -8*60)}}</span> -
+        阅读：<span class="colInfo">{{article.viewAmount}}</span> -
+        评论：<span class="colInfo">{{article.comments.length}}</span>
+    </p>
+    <dfn><p>{{article.description}}</p></dfn>
+    <div class="function"><a href="/view?articleid={{article.id}}">阅读全文</a></div>
+</div>
+{%endfor%}
+
+<div class="pager">
+    <ul class="clear">
+
+        <li class="previous">
+            {%if page <=1 %}
+            <span>没有上一页了</span>
+            {%else%}
+            <a href="/?category={{category}}&page={{page-1}}">上一页</a>
+            {%endif%}
+        </li>
+
+        {%if maxPageNumber > 0%}
+        <li>
+            <strong>{{page}} / {{maxPageNumber}}</strong>
+        </li>
+        {%endif%}
+
+        <li class="next">
+
+            {%if page >= maxPageNumber%}
+            <span>没有下一页了</span>
+            {%else%}
+            <a href="/?category={{category}}&page={{page+1}}">下一页</a>
+            {%endif%}
+
+        </li>
+
+    </ul>
+</div>
+
+{%endblock%}
